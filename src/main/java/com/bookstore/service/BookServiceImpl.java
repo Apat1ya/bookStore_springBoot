@@ -2,11 +2,11 @@ package com.bookstore.service;
 
 import com.bookstore.model.Book;
 import com.bookstore.repository.BookRepositoryImpl;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class BookServiceImpl implements BookService {
