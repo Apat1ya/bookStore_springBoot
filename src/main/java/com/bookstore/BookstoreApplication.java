@@ -21,12 +21,12 @@ public class BookstoreApplication {
     @Bean
     public CommandLineRunner commandLineRunner() {
         return args -> {
-            Book book1 = new Book();
-            book1.setAuthor("Taras");
-            book1.setIsbn("1235");
-            book1.setTitle("Title");
-            book1.setPrice(BigDecimal.valueOf(299));
-            bookService.save(book1);
+            Book book = new Book();
+            book.setAuthor("Taras");
+            book.setIsbn("1235");
+            book.setTitle("Title");
+            book.setPrice(BigDecimal.valueOf(299));
+            bookService.save(book);
             System.out.println(bookService.findAll());
         };
     }

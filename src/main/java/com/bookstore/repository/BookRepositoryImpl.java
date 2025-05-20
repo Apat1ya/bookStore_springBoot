@@ -1,5 +1,6 @@
 package com.bookstore.repository;
 
+import com.bookstore.exception.DataProcessingException;
 import com.bookstore.model.Book;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -26,7 +27,7 @@ public class BookRepositoryImpl implements BookRepository {
             if (transaction != null) {
                 transaction.rollback();
             }
-            throw new RuntimeException("Can`t save the book in DB" + book);
+            throw new DataProcessingException("Can`t save the book in DB" + book);
         } finally {
             session.close();
         }
@@ -38,6 +39,8 @@ public class BookRepositoryImpl implements BookRepository {
         try (Session session = sessionFactory.openSession()) {
             List<Book> books = session.createQuery("from Book").list();
             return books;
+        } catch (Exception e) {
+            throw new DataProcessingException("Can`t find books");
         }
     }
 }
