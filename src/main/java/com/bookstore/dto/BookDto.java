@@ -1,6 +1,5 @@
 package com.bookstore.dto;
 
-import jakarta.persistence.Column;
 import java.math.BigDecimal;
 import lombok.Getter;
 import lombok.Setter;
