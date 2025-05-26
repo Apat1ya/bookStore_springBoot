@@ -28,7 +28,7 @@ public class BookRepositoryImpl implements BookRepository {
             if (transaction != null) {
                 transaction.rollback();
             }
-            throw new DataProcessingException("Can`t save the book in DB" + book + e);
+            throw new DataProcessingException("Can`t save the book in DB" + book);
         } finally {
             session.close();
         }
@@ -50,7 +50,9 @@ public class BookRepositoryImpl implements BookRepository {
     public Optional<Book> findById(Long id) {
         try (Session session = sessionFactory.openSession()) {
             Book book = session.find(Book.class, id);
-            return book != null ? Optional.of(book) : Optional.empty();
+            return Optional.ofNullable(book);
+        } catch (DataProcessingException e) {
+            throw new DataProcessingException("Error fetching book with id: " + id);
         }
     }
 }
