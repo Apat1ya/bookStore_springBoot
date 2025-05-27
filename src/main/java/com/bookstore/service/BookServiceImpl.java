@@ -2,11 +2,11 @@ package com.bookstore.service;
 
 import com.bookstore.dto.BookDto;
 import com.bookstore.dto.CreateBookRequestDto;
+import com.bookstore.exception.DataProcessingException;
 import com.bookstore.mapper.BookMapper;
 import com.bookstore.model.Book;
 import com.bookstore.repository.BookRepository;
 import java.util.List;
-import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -30,8 +30,9 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public Optional<BookDto> findById(Long id) {
-        return bookRepository.findById(id)
-                .map(bookMapper::toDto);
+    public BookDto findById(Long id) {
+        Book book = bookRepository.findById(id)
+                .orElseThrow(() -> new DataProcessingException("Book not found with id: " + id));
+        return bookMapper.toDto(book);
     }
 }
