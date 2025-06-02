@@ -1,25 +1,38 @@
 package com.bookstore.service;
 
+import com.bookstore.dto.BookDto;
+import com.bookstore.dto.CreateBookRequestDto;
+import com.bookstore.exception.DataProcessingException;
+import com.bookstore.mapper.BookMapper;
 import com.bookstore.model.Book;
 import com.bookstore.repository.BookRepository;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
 public class BookServiceImpl implements BookService {
-    @Autowired
     private final BookRepository bookRepository;
+    private final BookMapper bookMapper;
 
     @Override
-    public Book save(Book book) {
-        return bookRepository.save(book);
+    public BookDto save(CreateBookRequestDto requestDto) {
+        Book book = bookMapper.toModel(requestDto);
+        return bookMapper.toDto(bookRepository.save(book));
     }
 
     @Override
-    public List<Book> findAll() {
-        return bookRepository.findAll();
+    public List<BookDto> findAll() {
+        return bookRepository.findAll().stream()
+                .map(bookMapper::toDto)
+                .toList();
+    }
+
+    @Override
+    public BookDto findById(Long id) {
+        Book book = bookRepository.findById(id)
+                .orElseThrow(() -> new DataProcessingException("Book not found with id: " + id));
+        return bookMapper.toDto(book);
     }
 }
