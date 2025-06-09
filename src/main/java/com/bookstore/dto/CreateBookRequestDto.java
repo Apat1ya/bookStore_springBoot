@@ -1,5 +1,6 @@
 package com.bookstore.dto;
 
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import java.math.BigDecimal;
@@ -9,10 +10,11 @@ import lombok.Setter;
 @Getter
 @Setter
 public class CreateBookRequestDto {
-    @NotNull
+    @NotBlank
     private String title;
-    @NotNull
+    @NotBlank
     private String author;
+    @NotBlank
     private String isbn;
     @Positive
     @NotNull
