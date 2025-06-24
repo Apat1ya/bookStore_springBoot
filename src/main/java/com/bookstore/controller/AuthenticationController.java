@@ -4,6 +4,7 @@ import com.bookstore.dto.user.UserRegistrationRequestDto;
 import com.bookstore.dto.user.UserResponseDto;
 import com.bookstore.exception.RegistrationException;
 import com.bookstore.service.user.UserService;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +21,10 @@ public class AuthenticationController {
     private final UserService userService;
 
     @PostMapping("/registration")
+    @Operation(
+            summary = "Register a new user",
+            description = "Creates a new user account"
+    )
     public UserResponseDto register(@RequestBody @Valid UserRegistrationRequestDto request)
             throws RegistrationException {
         return userService.register(request);
