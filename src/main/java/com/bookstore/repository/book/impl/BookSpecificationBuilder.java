@@ -1,6 +1,6 @@
 package com.bookstore.repository.book.impl;
 
-import com.bookstore.dto.BookSearchParametersDto;
+import com.bookstore.dto.book.BookSearchParametersDto;
 import com.bookstore.model.Book;
 import com.bookstore.repository.book.SpecificationBuilder;
 import com.bookstore.repository.book.SpecificationProviderManager;
@@ -11,10 +11,10 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 @Component
 public class BookSpecificationBuilder implements SpecificationBuilder<Book> {
-    private final SpecificationProviderManager<Book> bookSpecificationProvider;
+    public static final String titleKey = "title";
+    public static final String authorKey = "author";
 
-    private final String authorKey = "authors";
-    private final String titleKey = "titles";
+    private final SpecificationProviderManager<Book> bookSpecificationProvider;
 
     @Override
     public Specification<Book> build(BookSearchParametersDto searchParameters) {
