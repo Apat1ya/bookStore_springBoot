@@ -31,7 +31,7 @@ public class UserServiceImpl implements UserService {
         }
         User savedUser = userMapper.toModel(requestDto);
         savedUser.setPassword(passwordEncoder.encode(requestDto.getPassword()));
-        Role userRole = roleRepository.findByRole(RoleName.USER)
+        Role userRole = roleRepository.findByRole(RoleName.ROLE_USER)
                 .orElseThrow(() -> new RuntimeException("Role USER not found"));
         savedUser.setRoles(Set.of(userRole));
         userRepository.save(savedUser);

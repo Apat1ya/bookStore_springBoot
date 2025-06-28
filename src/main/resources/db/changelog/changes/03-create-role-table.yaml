@@ -27,7 +27,7 @@ databaseChangeLog:
                   valueNumeric: 1
               - column:
                   name: role
-                  value: USER
+                  value: ROLE_USER
 
         - insert:
             tableName: roles
@@ -37,4 +37,4 @@ databaseChangeLog:
                   valueNumeric: 2
               - column:
                   name: role
-                  value: ADMIN
+                  value: ROLE_ADMIN
