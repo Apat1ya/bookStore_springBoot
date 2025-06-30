@@ -4,6 +4,7 @@ import com.bookstore.dto.book.BookDto;
 import com.bookstore.dto.book.BookSearchParametersDto;
 import com.bookstore.dto.book.CreateBookRequestDto;
 import com.bookstore.service.book.BookService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/books")
+@Tag(name = "Books", description = "Books: create, view, update and delete")
 public class BookController {
     private final BookService bookService;
 
