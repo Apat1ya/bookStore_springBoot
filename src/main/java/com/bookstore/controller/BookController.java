@@ -4,6 +4,7 @@ import com.bookstore.dto.book.BookDto;
 import com.bookstore.dto.book.BookSearchParametersDto;
 import com.bookstore.dto.book.CreateBookRequestDto;
 import com.bookstore.service.book.BookService;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import java.util.List;
@@ -27,6 +28,10 @@ import org.springframework.web.bind.annotation.RestController;
 public class BookController {
     private final BookService bookService;
 
+    @Operation(
+            summary = "Get all books",
+            description = "Returns a list of all books in the store"
+    )
     @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @GetMapping
     public List<BookDto> getAll() {
