@@ -16,6 +16,9 @@ public class BookSpecificationBuilder implements SpecificationBuilder<Book> {
 
     private final SpecificationProviderManager<Book> bookSpecificationProvider;
 
+    private final String authorKey = "authors";
+    private final String titleKey = "titles";
+
     @Override
     public Specification<Book> build(BookSearchParametersDto searchParameters) {
         Specification<Book> spec = Specification.where(null);

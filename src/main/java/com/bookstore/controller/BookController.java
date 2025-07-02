@@ -9,6 +9,8 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -34,8 +36,8 @@ public class BookController {
     )
     @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @GetMapping
-    public List<BookDto> getAll() {
-        return bookService.findAll();
+    public Page<BookDto> getAll(Pageable pageable) {
+        return bookService.findAll(pageable);
     }
 
     @Operation(
@@ -88,7 +90,7 @@ public class BookController {
     )
     @PreAuthorize("hasRole('USER')")
     @GetMapping("/search")
-    public List<BookDto> search(BookSearchParametersDto parameters) {
-        return bookService.search(parameters);
+    public Page<BookDto> search(BookSearchParametersDto param, Pageable pageable) {
+        return bookService.search(param,pageable);
     }
 }
