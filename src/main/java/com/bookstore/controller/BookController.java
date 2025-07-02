@@ -50,7 +50,7 @@ public class BookController {
 
     @Operation(
             summary = "Create book",
-            description = "Returns the book found by ID"
+            description = "Create a new book and save it to the DB"
     )
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
@@ -61,7 +61,7 @@ public class BookController {
 
     @Operation(
             summary = "Update book",
-            description = " Modifies the book information by its identifier."
+            description = " Modifies the book information by its ID."
             + "Fields that are not passed in the body of the query remain unchanged"
     )
     @PreAuthorize("hasRole('ADMIN')")
