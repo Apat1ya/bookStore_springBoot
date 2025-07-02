@@ -38,12 +38,20 @@ public class BookController {
         return bookService.findAll();
     }
 
+    @Operation(
+            summary = "Get book by ID",
+            description = "Returns the book found by ID"
+    )
     @PreAuthorize("hasRole('USER')")
     @GetMapping("{id}")
     public BookDto getBookById(@PathVariable Long id) {
         return bookService.findById(id);
     }
 
+    @Operation(
+            summary = "Create book",
+            description = "Returns the book found by ID"
+    )
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -51,6 +59,11 @@ public class BookController {
         return bookService.save(bookDto);
     }
 
+    @Operation(
+            summary = "Update book",
+            description = " Modifies the book information by its identifier."
+            + "Fields that are not passed in the body of the query remain unchanged"
+    )
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("{id}")
     public BookDto updateBook(@PathVariable Long id,
@@ -58,6 +71,10 @@ public class BookController {
         return bookService.update(id,bookDto);
     }
 
+    @Operation(
+            summary = "Delete book",
+            description = "Delete one book from DB according to its ID"
+    )
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
@@ -65,6 +82,10 @@ public class BookController {
         bookService.deleteById(id);
     }
 
+    @Operation(
+            summary = "Search book",
+            description = "Returns a list of books that satisfy one or more filters."
+    )
     @PreAuthorize("hasRole('USER')")
     @GetMapping("/search")
     public List<BookDto> search(BookSearchParametersDto parameters) {
