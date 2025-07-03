@@ -36,7 +36,7 @@ databaseChangeLog:
                     nullable: false
               - column:
                   name: shipping_address
-                  type: VARCHAR(500)
+                  type: VARCHAR(255)
               - column:
                   name: is_deleted
                   type: TINYINT(1)

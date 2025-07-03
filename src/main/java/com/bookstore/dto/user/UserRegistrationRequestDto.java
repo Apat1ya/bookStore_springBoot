@@ -7,7 +7,8 @@ import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
-@FieldMatch
+@FieldMatch(firstField = "password",
+        secondField = "repeatPassword")
 @Getter
 @Setter
 public class UserRegistrationRequestDto {
