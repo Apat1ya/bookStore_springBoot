@@ -39,7 +39,7 @@ public class AuthenticationController {
             summary = "User Login",
             description = "Endpoint for authenticating an existing user"
     )
-    public UserLoginResponseDto login(@RequestBody UserLoginRequestDto request) {
+    public UserLoginResponseDto login(@RequestBody @Valid UserLoginRequestDto request) {
         return authenticationService.authenticate(request);
     }
 }
