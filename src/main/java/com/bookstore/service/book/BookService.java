@@ -18,4 +18,6 @@ public interface BookService {
     void deleteById(Long id);
 
     Page<BookDto> search(BookSearchParametersDto requestDto, Pageable pageable);
+
+    Page<BookDto> findAllByCategoriesId(Long categoryId, Pageable pageable);
 }
