@@ -7,8 +7,12 @@ import com.bookstore.exception.DataProcessingException;
 import com.bookstore.exception.EntityNotFoundException;
 import com.bookstore.mapper.book.BookMapper;
 import com.bookstore.model.Book;
+import com.bookstore.model.Category;
 import com.bookstore.repository.book.BookRepository;
 import com.bookstore.repository.book.impl.BookSpecificationBuilder;
+import com.bookstore.repository.category.CategoryRepository;
+import java.util.Set;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -21,10 +25,12 @@ public class BookServiceImpl implements BookService {
     private final BookRepository bookRepository;
     private final BookMapper bookMapper;
     private final BookSpecificationBuilder bookSpecificationBuilder;
+    private final CategoryRepository categoryRepository;
 
     @Override
     public BookDto save(CreateBookRequestDto requestDto) {
-        Book book = bookMapper.toModel(requestDto);
+        Book book = bookMapper.toEntity(requestDto);
+        book.setCategories(categoriesIdToCategories(requestDto.getCategoryIds()));
         return bookMapper.toDto(bookRepository.save(book));
     }
 
@@ -47,6 +53,7 @@ public class BookServiceImpl implements BookService {
                 .orElseThrow(() -> new EntityNotFoundException("Book not found with id: " + id)
                 );
         bookMapper.updateFromDto(book, requestDto);
+        book.setCategories(categoriesIdToCategories(requestDto.getCategoryIds()));
         bookRepository.save(book);
         return bookMapper.toDto(book);
     }
@@ -62,5 +69,17 @@ public class BookServiceImpl implements BookService {
         Specification<Book> specificationBuilder = bookSpecificationBuilder.build(requestDto);
         return bookRepository.findAll(specificationBuilder,pageable)
                 .map(bookMapper::toDto);
+    }
+
+    @Override
+    public Page<BookDto> findAllByCategoriesId(Long categoryId,Pageable pageable) {
+        return bookRepository.findAllByCategoriesId(categoryId,pageable)
+                .map(bookMapper::toDto);
+    }
+
+    private Set<Category> categoriesIdToCategories(Set<Long> categories) {
+        return categories.stream()
+                .map(categoryRepository::getReferenceById)
+                .collect(Collectors.toSet());
     }
 }
