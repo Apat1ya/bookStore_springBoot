@@ -7,7 +7,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.SQLRestriction;
@@ -18,7 +18,7 @@ import org.hibernate.annotations.SQLRestriction;
 @Table(name = "categories")
 @SQLDelete(sql = "UPDATE categories SET is_deleted = true WHERE id=?")
 @SQLRestriction("is_deleted = false")
-@RequiredArgsConstructor
+@NoArgsConstructor
 public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

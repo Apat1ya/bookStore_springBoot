@@ -1,7 +1,7 @@
 package com.bookstore.service.category;
 
 import com.bookstore.dto.category.CategoryDto;
-import com.bookstore.exception.DataProcessingException;
+import com.bookstore.dto.category.CategoryResponseDto;
 import com.bookstore.exception.EntityNotFoundException;
 import com.bookstore.mapper.category.CategoryMapper;
 import com.bookstore.model.Category;
@@ -18,26 +18,26 @@ public class CategoryServiceImpl implements CategoryService {
     private final CategoryMapper categoryMapper;
 
     @Override
-    public Page<CategoryDto> findAll(Pageable pageable) {
+    public Page<CategoryResponseDto> findAll(Pageable pageable) {
         return categoryRepository.findAll(pageable)
                 .map(categoryMapper::toDto);
     }
 
     @Override
-    public CategoryDto getById(Long id) {
+    public CategoryResponseDto getById(Long id) {
         Category category = categoryRepository.findById(id)
-                .orElseThrow(() -> new DataProcessingException("Category not found by id: " + id));
+                .orElseThrow(() -> new EntityNotFoundException("Category not found by id: " + id));
         return categoryMapper.toDto(category);
     }
 
     @Override
-    public CategoryDto save(CategoryDto categoryDto) {
+    public CategoryResponseDto save(CategoryDto categoryDto) {
         Category category = categoryMapper.toEntity(categoryDto);
         return categoryMapper.toDto(categoryRepository.save(category));
     }
 
     @Override
-    public CategoryDto update(Long id, CategoryDto categoryDto) {
+    public CategoryResponseDto update(Long id, CategoryDto categoryDto) {
         Category category = categoryRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Book not found by id " + id)
                 );

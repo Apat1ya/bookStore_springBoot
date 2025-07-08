@@ -2,9 +2,11 @@ package com.bookstore.controller;
 
 import com.bookstore.dto.book.BookDto;
 import com.bookstore.dto.category.CategoryDto;
+import com.bookstore.dto.category.CategoryResponseDto;
 import com.bookstore.service.category.CategoryService;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -23,7 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/categories")
-public class CategoriesController {
+public class CategoryController {
     private final CategoryService categoryService;
 
     @Operation(
@@ -32,7 +34,7 @@ public class CategoriesController {
     )
     @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @GetMapping
-    public Page<CategoryDto> getAll(Pageable pageable) {
+    public Page<CategoryResponseDto> getAll(Pageable pageable) {
         return categoryService.findAll(pageable);
     }
 
@@ -42,7 +44,7 @@ public class CategoriesController {
     )
     @GetMapping("{id}")
     @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
-    public CategoryDto getCategoryById(@PathVariable Long id) {
+    public CategoryResponseDto getCategoryById(@PathVariable Long id) {
         return categoryService.getById(id);
     }
 
@@ -53,7 +55,7 @@ public class CategoriesController {
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public CategoryDto createCategory(@RequestBody @Valid CategoryDto categoryDto) {
+    public CategoryResponseDto createCategory(@RequestBody @Valid CategoryDto categoryDto) {
         return categoryService.save(categoryDto);
     }
 
@@ -64,7 +66,7 @@ public class CategoriesController {
     )
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("{id}")
-    public CategoryDto updateCategory(@PathVariable Long id,
+    public CategoryResponseDto updateCategory(@PathVariable Long id,
                                       @RequestBody @Valid CategoryDto categoryDto) {
         return categoryService.update(id, categoryDto);
     }
@@ -86,7 +88,7 @@ public class CategoriesController {
     )
     @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @GetMapping("{id}/books")
-    public Page<BookDto> findAllByCategoriesId(@PathVariable @Valid Long id, Pageable pageable) {
+    public Page<BookDto> findAllByCategoriesId(@PathVariable @Positive Long id, Pageable pageable) {
         return findAllByCategoriesId(id,pageable);
     }
 }
