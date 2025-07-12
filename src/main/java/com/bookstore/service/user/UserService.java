@@ -6,4 +6,6 @@ import com.bookstore.exception.RegistrationException;
 
 public interface UserService {
     UserResponseDto register(UserRegistrationRequestDto requestDto) throws RegistrationException;
+
+    Long getCurrentUserId();
 }
