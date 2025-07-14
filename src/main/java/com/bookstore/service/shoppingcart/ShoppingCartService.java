@@ -13,4 +13,6 @@ public interface ShoppingCartService {
 
     ShoppingCartResponseDto deleteItemById(Long cartItemId);
 
+    Long getCurrentUserId();
+
 }

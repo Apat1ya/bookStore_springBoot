@@ -50,11 +50,4 @@ public class UserServiceImpl implements UserService {
         return userMapper.modelToResponse(savedUser);
     }
 
-    @Override
-    public Long getCurrentUserId() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String email = authentication.getName();
-        Optional<User> user = userRepository.findByEmail(email);
-        return user.get().getId();
-    }
 }

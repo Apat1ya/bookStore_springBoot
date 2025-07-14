@@ -1,5 +1,6 @@
 package com.bookstore.repository.shoppingcart;
 
+import com.bookstore.model.CartItem;
 import com.bookstore.model.ShoppingCart;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
