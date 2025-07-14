@@ -35,7 +35,7 @@ public class ShoppingCartController {
     )
     @GetMapping
     @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
-    public ShoppingCartResponseDto getAllItem() {
+    public ShoppingCartResponseDto getAllItemFromShoppingCart() {
         return shoppingCartService.getShoppingCart();
     }
 

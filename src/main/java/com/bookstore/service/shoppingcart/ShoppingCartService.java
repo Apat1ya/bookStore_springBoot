@@ -3,6 +3,7 @@ package com.bookstore.service.shoppingcart;
 import com.bookstore.dto.cartitem.CartItemRequestDto;
 import com.bookstore.dto.cartitem.CartItemUpdateDto;
 import com.bookstore.dto.shoppingcart.ShoppingCartResponseDto;
+import com.bookstore.model.User;
 
 public interface ShoppingCartService {
     ShoppingCartResponseDto getShoppingCart();
@@ -13,6 +14,5 @@ public interface ShoppingCartService {
 
     ShoppingCartResponseDto deleteItemById(Long cartItemId);
 
-    Long getCurrentUserId();
-
+    void createShoppingCart(User user);
 }

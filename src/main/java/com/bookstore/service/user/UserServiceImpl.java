@@ -7,11 +7,10 @@ import com.bookstore.exception.RegistrationException;
 import com.bookstore.mapper.user.UserMapper;
 import com.bookstore.model.Role;
 import com.bookstore.model.RoleName;
-import com.bookstore.model.ShoppingCart;
 import com.bookstore.model.User;
 import com.bookstore.repository.role.RoleRepository;
-import com.bookstore.repository.shoppingcart.ShoppingCartRepository;
 import com.bookstore.repository.user.UserRepository;
+import com.bookstore.service.shoppingcart.ShoppingCartService;
 import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -26,7 +25,7 @@ public class UserServiceImpl implements UserService {
     private final UserMapper userMapper;
     private final PasswordEncoder passwordEncoder;
     private final RoleRepository roleRepository;
-    private final ShoppingCartRepository shoppingCartRepository;
+    private final ShoppingCartService shoppingCartService;
 
     @Override
     public UserResponseDto register(UserRegistrationRequestDto requestDto)
@@ -40,10 +39,8 @@ public class UserServiceImpl implements UserService {
         Role userRole = roleRepository.findByRole(RoleName.ROLE_USER)
                 .orElseThrow(() -> new EntityNotFoundException(RoleName.ROLE_USER + " not found"));
         savedUser.setRoles(Set.of(userRole));
+        shoppingCartService.createShoppingCart(savedUser);
         userRepository.save(savedUser);
-        ShoppingCart cart = new ShoppingCart();
-        cart.setUser(savedUser);
-        shoppingCartRepository.save(cart);
         return userMapper.modelToResponse(savedUser);
     }
 
