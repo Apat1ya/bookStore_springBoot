@@ -9,8 +9,8 @@ import com.bookstore.model.Book;
 import com.bookstore.model.CartItem;
 import com.bookstore.model.ShoppingCart;
 import com.bookstore.model.User;
-import com.bookstore.repository.CartItemRepository;
 import com.bookstore.repository.book.BookRepository;
+import com.bookstore.repository.cartitem.CartItemRepository;
 import com.bookstore.repository.shoppingcart.ShoppingCartRepository;
 import com.bookstore.repository.user.UserRepository;
 import java.util.Optional;
@@ -42,7 +42,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         Book book = bookRepository.findById(cartItemRequestDto.getBookId())
                 .orElseThrow(() -> new EntityNotFoundException("Book not found by id: "
                         + cartItemRequestDto.getBookId()));
-        Optional<CartItem> existingItem = cartItemRepository.findByShoppingCartAndBookId(
+        Optional<CartItem> existingItem = cartItemRepository.findByShoppingCartIdAndBookId(
                 cart.getId(), cartItemRequestDto.getBookId());
         if (existingItem.isEmpty()) {
             CartItem newItem = new CartItem();
