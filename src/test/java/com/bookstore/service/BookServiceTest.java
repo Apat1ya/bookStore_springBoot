@@ -16,7 +16,7 @@ import static org.mockito.Mockito.when;
 
 import com.bookstore.dto.book.BookDto;
 import com.bookstore.dto.book.CreateBookRequestDto;
-import com.bookstore.exception.DataProcessingException;
+import com.bookstore.exception.EntityNotFoundException;
 import com.bookstore.mapper.book.BookMapper;
 import com.bookstore.model.Book;
 import com.bookstore.model.Category;
@@ -69,12 +69,12 @@ public class BookServiceTest {
     }
 
     @Test
-    @DisplayName("Get book by invalid id should throw DataProcessingException")
+    @DisplayName("Get book by invalid id should throw EntityNotFoundException")
     void getBookById_WithInvalidId_NotOk() {
         Long bookId = 89L;
         when(bookRepository.findById(bookId)).thenReturn(Optional.empty());
-        DataProcessingException exception = assertThrows(
-                DataProcessingException.class,
+        EntityNotFoundException exception = assertThrows(
+                EntityNotFoundException.class,
                 () -> bookService.findById(bookId)
         );
         assertEquals("Book not found with id: " + bookId, exception.getMessage());

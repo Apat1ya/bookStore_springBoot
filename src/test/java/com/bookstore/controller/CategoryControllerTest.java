@@ -80,6 +80,15 @@ public class CategoryControllerTest {
     }
 
     @Test
+    @DisplayName("Get category by invalid id should return 404")
+    @WithMockUser(username = "user", roles = "USER")
+    void getBookById_WithInvalidId_NotOk() throws Exception {
+        Long id = 999L;
+        mockMvc.perform(get("/categories/{id}", id))
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
     @DisplayName("create category with valid request")
     @WithMockUser(username = "admin", roles = "ADMIN")
     @Sql(scripts = {"classpath:database/categories/delete-categories.sql"},

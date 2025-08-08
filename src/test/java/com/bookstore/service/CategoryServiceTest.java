@@ -3,12 +3,14 @@ package com.bookstore.service;
 import static com.bookstore.util.TestUtil.createListOfTwoCategories;
 import static com.bookstore.util.TestUtil.createListOfTwoCategoriesDtos;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import com.bookstore.dto.category.CategoryDto;
 import com.bookstore.dto.category.CategoryResponseDto;
+import com.bookstore.exception.EntityNotFoundException;
 import com.bookstore.mapper.category.CategoryMapper;
 import com.bookstore.model.Category;
 import com.bookstore.repository.category.CategoryRepository;
@@ -78,6 +80,19 @@ public class CategoryServiceTest {
         assertEquals(actual,categoryDto);
         verify(categoryRepository).findById(categoryId);
         verify(categoryMapper).toDto(category);
+    }
+
+    @Test
+    @DisplayName("Get book by invalid id should throw EntityNotFoundException")
+    void getBookById_WithInvalidId_NotOk() {
+        Long id = 789L;
+        when(categoryRepository.findById(id)).thenReturn(Optional.empty());
+        EntityNotFoundException exception = assertThrows(
+                EntityNotFoundException.class,
+                () -> categoryService.getById(id)
+        );
+        assertEquals("Category not found by id: " + id, exception.getMessage());
+        verify(categoryRepository).findById(id);
     }
 
     @Test

@@ -3,7 +3,6 @@ package com.bookstore.service.book;
 import com.bookstore.dto.book.BookDto;
 import com.bookstore.dto.book.BookSearchParametersDto;
 import com.bookstore.dto.book.CreateBookRequestDto;
-import com.bookstore.exception.DataProcessingException;
 import com.bookstore.exception.EntityNotFoundException;
 import com.bookstore.mapper.book.BookMapper;
 import com.bookstore.model.Book;
@@ -43,7 +42,7 @@ public class BookServiceImpl implements BookService {
     @Override
     public BookDto findById(Long id) {
         Book book = bookRepository.findById(id)
-                .orElseThrow(() -> new DataProcessingException("Book not found with id: " + id));
+                .orElseThrow(() -> new EntityNotFoundException("Book not found with id: " + id));
         return bookMapper.toDto(book);
     }
 
@@ -60,7 +59,7 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public void deleteById(Long id) {
-        
+
         bookRepository.deleteById(id);
     }
 

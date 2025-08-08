@@ -12,12 +12,14 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.bookstore.dto.book.BookDto;
+import com.bookstore.service.book.BookServiceImpl;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -40,6 +42,9 @@ public class BookControllerTest {
 
     @Autowired
     private ObjectMapper objectMapper;
+
+    @InjectMocks
+    private BookServiceImpl bookService;
 
     @Test
     @DisplayName("return all books")
@@ -83,6 +88,15 @@ public class BookControllerTest {
         String json = result.getResponse().getContentAsString();
         BookDto actual = objectMapper.readValue(json, BookDto.class);
         assertThat(actual).usingRecursiveComparison().isEqualTo(expected);
+    }
+
+    @Test
+    @DisplayName("get book by invalid id should return 404")
+    @WithMockUser(username = "user", roles = "USER")
+    void getBookById_WithInvalidId_NotOk() throws Exception {
+        Long id = 999L;
+        mockMvc.perform(get("/books/{id}", id))
+                .andExpect(status().isNotFound());
     }
 
     @Test
