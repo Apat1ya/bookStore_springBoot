@@ -1,4 +1,5 @@
 ## 📚 Online Book Store Application
+
 Developed as a pet project, **Book Store** showcases the power of Spring Boot in building robust RESTful services. 
 It offers authentication, cart functionality, order tracking, and admin-level product management in a simple, 
 maintainable structure.
@@ -65,7 +66,7 @@ maintainable structure.
 
 ---
 ### Entities Structure
-![Entities Structures](https://ibb.co/yBnqV5ps)
+![Entities Structures](https://i.ibb.co/DgDQLkYK/2025-08-09-181328781.png)
 
 ---
 ### How to Run the Project
