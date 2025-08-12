@@ -1,8 +1,9 @@
 ## 📚 Online Book Store Application
 
-Developed as a pet project, **Book Store** showcases the power of Spring Boot in building robust RESTful services. 
+Developed as a pet project, Book Store showcases the power of Spring Boot in building robust RESTful services. 
 It offers authentication, cart functionality, order tracking, and admin-level product management in a simple, 
 maintainable structure.
+
 ---
 ## Technology Stack
 
